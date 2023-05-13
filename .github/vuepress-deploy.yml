@@ -13,6 +13,6 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: username/repo
           TARGET_BRANCH: main
-          BUILD_SCRIPT: npm run docs:build
+          BUILD_SCRIPT: npm run build
           BUILD_DIR: docs/.vuepress/dist
           CNAME: https://docs.jxlss.cn

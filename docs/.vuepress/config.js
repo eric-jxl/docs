@@ -9,6 +9,7 @@ module.exports = {
     ],
     themeConfig: {
         logo: '/vim-go.png',
+        subSidebar: 'auto',
         lastUpdated: 'Last Updated', // string | boolean
         repo: 'https://github.com/eric-jxl/docs.git',
         docsDir: 'docs/.vuepress/dist',

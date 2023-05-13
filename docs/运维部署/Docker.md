@@ -7,8 +7,6 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 ## Docker 安装
 
-### 官方源
-
 ```shell
 sudo apt-get update && apt-get upgrade
 
