@@ -12,7 +12,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: username/repo
-          TARGET_BRANCH: master
-          BUILD_SCRIPT: yarn && yarn docs:build
+          TARGET_BRANCH: main
+          BUILD_SCRIPT: npm run docs:build
           BUILD_DIR: docs/.vuepress/dist
           CNAME: https://docs.jxlss.cn
