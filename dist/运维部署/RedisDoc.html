@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redis 安装与配置 | Eric&#39;s Docs</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/vim-go.png">
+    <meta name="description" content="Vue 驱动的静态网站生成器">
+    
+    <link rel="preload" href="/assets/css/0.styles.e8e4f3a3.css" as="style"><link rel="preload" href="/assets/js/app.7c55f94f.js" as="script"><link rel="preload" href="/assets/js/2.559d5401.js" as="script"><link rel="preload" href="/assets/js/20.4ec18ec9.js" as="script"><link rel="prefetch" href="/assets/js/10.85fff07d.js"><link rel="prefetch" href="/assets/js/11.e79855c3.js"><link rel="prefetch" href="/assets/js/12.47f2790b.js"><link rel="prefetch" href="/assets/js/13.417251e4.js"><link rel="prefetch" href="/assets/js/14.3edae8b6.js"><link rel="prefetch" href="/assets/js/15.31a2fdab.js"><link rel="prefetch" href="/assets/js/16.dbeeb2bc.js"><link rel="prefetch" href="/assets/js/17.a8c19dd2.js"><link rel="prefetch" href="/assets/js/18.4c7e963a.js"><link rel="prefetch" href="/assets/js/19.fd78613b.js"><link rel="prefetch" href="/assets/js/21.06a25a1c.js"><link rel="prefetch" href="/assets/js/22.ffea2b32.js"><link rel="prefetch" href="/assets/js/23.ea92f16d.js"><link rel="prefetch" href="/assets/js/24.5f25ce9f.js"><link rel="prefetch" href="/assets/js/3.e9d031a5.js"><link rel="prefetch" href="/assets/js/4.f16d5533.js"><link rel="prefetch" href="/assets/js/5.905f59dc.js"><link rel="prefetch" href="/assets/js/6.2f60c27c.js"><link rel="prefetch" href="/assets/js/7.46575d9e.js"><link rel="prefetch" href="/assets/js/8.bf349ec1.js"><link rel="prefetch" href="/assets/js/9.0653cbde.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e8e4f3a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/vim-go.png" alt="Eric's Docs" class="logo"> <span class="site-name can-hide">Eric's Docs</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Guide" class="dropdown-title"><span class="title">Guide</span> <span class="arrow down"></span></button> <button type="button" aria-label="Guide" class="mobile-dropdown-title"><span class="title">Guide</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          超高清能力
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/超高清能力/交接文档.html" class="nav-link">
+  交接文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/搬迁组件说明文档.html" class="nav-link">
+  搬迁文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/Dvadmin 接口.html" class="nav-link">
+  Dvadmin接口
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/RD报告接口文档.html" class="nav-link">
+  RD报告接口文档
+</a></li></ul></li><li class="dropdown-item"><h4>
+          运维部署
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/运维部署/Docker.html" class="nav-link">
+  Docker
+</a></li></ul></li><li class="dropdown-item"><h4>
+          面经
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/面试/面经.html" class="nav-link">
+  面经
+</a></li></ul></li><li class="dropdown-item"><h4>
+          odoo
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/odoo/odoo核心业务.html" class="nav-link">
+  odoo核心业务
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://github.com/eric-jxl/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/eric-jxl/docs.git" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Guide" class="dropdown-title"><span class="title">Guide</span> <span class="arrow down"></span></button> <button type="button" aria-label="Guide" class="mobile-dropdown-title"><span class="title">Guide</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          超高清能力
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/超高清能力/交接文档.html" class="nav-link">
+  交接文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/搬迁组件说明文档.html" class="nav-link">
+  搬迁文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/Dvadmin 接口.html" class="nav-link">
+  Dvadmin接口
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/RD报告接口文档.html" class="nav-link">
+  RD报告接口文档
+</a></li></ul></li><li class="dropdown-item"><h4>
+          运维部署
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/运维部署/Docker.html" class="nav-link">
+  Docker
+</a></li></ul></li><li class="dropdown-item"><h4>
+          面经
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/面试/面经.html" class="nav-link">
+  面经
+</a></li></ul></li><li class="dropdown-item"><h4>
+          odoo
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/odoo/odoo核心业务.html" class="nav-link">
+  odoo核心业务
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://github.com/eric-jxl/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/eric-jxl/docs.git" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>超高清能力</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/超高清能力/搬迁组件说明文档.html" class="sidebar-link">搬迁组件说明文档</a></li><li><a href="/超高清能力/交接文档.html" class="sidebar-link">交接文档</a></li><li><a href="/超高清能力/DTing VQMT VQA部署常见问题.html" class="sidebar-link">DTing VQMT VQA部署常见问题</a></li><li><a href="/超高清能力/Dvadmin 接口.html" class="sidebar-link">标签</a></li><li><a href="/超高清能力/RD报告接口文档.html" class="sidebar-link">RD 报告 API 文档</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>运维部署</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/运维部署/Docker.html" class="sidebar-link">Docker</a></li><li><a href="/运维部署/Golang Ubuntu安装及配置.html" class="sidebar-link">Golang Ubuntu安装及配置</a></li><li><a href="/运维部署/Jupyter 远程配置.html" class="sidebar-link">Jupyter 远程配置</a></li><li><a href="/运维部署/nacos安装指南.html" class="sidebar-link">nacos安装指南</a></li><li><a href="/运维部署/RedisDoc.html" class="active sidebar-link">Redis 安装与配置</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/运维部署/RedisDoc.html#python-redis-连接" class="sidebar-link">Python Redis 连接</a></li><li class="sidebar-sub-header"><a href="/运维部署/RedisDoc.html#_1-string" class="sidebar-link">1.String</a></li><li class="sidebar-sub-header"><a href="/运维部署/RedisDoc.html#_2-hash" class="sidebar-link">2.Hash</a></li><li class="sidebar-sub-header"><a href="/运维部署/RedisDoc.html#_3-list" class="sidebar-link">3.List</a></li><li class="sidebar-sub-header"><a href="/运维部署/RedisDoc.html#_4-set" class="sidebar-link">4.Set</a></li><li class="sidebar-sub-header"><a href="/运维部署/RedisDoc.html#_5-zset" class="sidebar-link">5.Zset</a></li></ul></li><li><a href="/运维部署/Ubuntu部署.html" class="sidebar-link">Ubuntu 部署nginx、生成泛域名证书</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>odoo</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/odoo/巡检任务接口.html" class="sidebar-link">巡检任务查询接口</a></li><li><a href="/odoo/odoo核心业务.html" class="sidebar-link">核心业务</a></li><li><a href="/odoo/Odoo及Postgresql.html" class="sidebar-link">Odoo及Postgresql</a></li><li><a href="/odoo/odooconf.html" class="sidebar-link">Odoo Sever Config</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="redis-安装与配置"><a href="#redis-安装与配置" class="header-anchor">#</a> Redis 安装与配置</h1> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#编译安装</span>
+$ <span class="token function">wget</span> https://download.redis.io/releases/redis-6.2.1.tar.gz
+$ <span class="token function">tar</span> xzf redis-6.2.1.tar.gz
+$ <span class="token builtin class-name">cd</span> redis-6.2.1
+$ <span class="token function">make</span>
+$ <span class="token function">make</span> <span class="token function">install</span>
+$ <span class="token function">apt</span> <span class="token function">install</span> redis-tools
+$ src/redis-server
+
+<span class="token comment">#试验交互</span>
+$ src/redis-cli
+
+<span class="token comment">#Mac ：brew update &amp;&amp; brew install redis</span>
+<span class="token comment">#Ubuntu：apt-get update &amp;&amp; apt-get upgrade &amp;&amp; apt-get install redis</span>
+<span class="token function">vi</span> /etc/redis/redis.conf 
+<span class="token comment">#bind 127.0.0.1</span>
+daemonize <span class="token function">yes</span>   <span class="token comment">#redis-server 后台启动</span>
+requirepass 1qaz2wsx   <span class="token comment">#设置redis密码</span>
+<span class="token function">ps</span> <span class="token parameter variable">-ef</span> <span class="token operator">|</span><span class="token function">grep</span> redis
+redis-cli INFO <span class="token operator">|</span> <span class="token function">grep</span> ^db
+</code></pre></div><h2 id="python-redis-连接"><a href="#python-redis-连接" class="header-anchor">#</a> Python Redis 连接</h2> <div class="language-python extra-class"><pre class="language-python"><code> pip install redis
+ <span class="token keyword">import</span> redis
+ pool <span class="token operator">=</span> redis<span class="token punctuation">.</span>ConnectionPool<span class="token punctuation">(</span>host<span class="token operator">=</span>host<span class="token punctuation">,</span> port<span class="token operator">=</span>port<span class="token punctuation">,</span> password<span class="token operator">=</span>password<span class="token punctuation">,</span> db<span class="token operator">=</span>db<span class="token punctuation">,</span> decode_responses<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span> <span class="token comment">#decode_responses 防止中文编码乱码</span>
+  cursor <span class="token operator">=</span> redis<span class="token punctuation">.</span>StrictRedis<span class="token punctuation">(</span>connection_pool<span class="token operator">=</span>pool<span class="token punctuation">)</span> 
+<span class="token comment">#Redis 类用于向后兼容旧版本的redis-py，对Redis的接口实现做了部分修改Redis类中将参数num和value的顺序交换了</span>
+<span class="token comment">#推荐使用redis.StrictRedis 和Redis命令行语法兼容</span>
+</code></pre></div><h1 id="redis-数据类型"><a href="#redis-数据类型" class="header-anchor">#</a> redis 数据类型</h1> <h2 id="_1-string"><a href="#_1-string" class="header-anchor">#</a> 1.String</h2> <p><strong><em>string 类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512M</em>B</strong> <strong>常用命令</strong>：<strong>get、set、incr、decr、mget</strong>等</p> <p><strong>实现方式</strong>：String在redis内部存储默认就是一个字符串，被redisObject所引用，当遇到incr,decr等操作时会转成数值型进行计算，此时redisObject的encoding字段为int。</p> <blockquote><p>获取字符串长度
+往字符串append内容
+设置和获取字符串的某一段内容
+设置及获取字符串的某一位（bit）
+批量设置一系列字符串的内容</p></blockquote> <div class="language-redis extra-class"><pre class="language-text"><code>redis&gt; SET key value
+&quot;OK&quot;
+redis&gt; get key
+value
+redis &gt; EXPIRE key seconds
+redis &gt; ttl key #-1代表永久
+(integer) -1
+</code></pre></div><h2 id="_2-hash"><a href="#_2-hash" class="header-anchor">#</a> 2.Hash</h2> <p><strong><em>Hash 是一个键值(key =&gt; value)对集合。Redis hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对</em>象</strong></p> <p><strong>常用命令</strong>.<em>HMSET, HGET</em></p> <div class="language-redis extra-class"><pre class="language-text"><code>redis&gt; HSET myhash field1 &quot;Hello&quot; field2 &quot;World&quot;
+&quot;OK&quot;
+redis&gt; HGET myhash field1
+&quot;Hello&quot;
+redis&gt; HGETALL myhash #获取所有键值
+&quot;Hello&quot;
+&quot;World&quot;
+</code></pre></div><h2 id="_3-list"><a href="#_3-list" class="header-anchor">#</a> 3.List</h2> <p><em><strong>list 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）</strong></em></p> <p><strong>常用命令</strong>：<em><strong>lpush（添加左边元素）,rpush,lpop（移除左边第一个元素）,rpop,lrange（获取列表片段，LRANGE key start stop）等</strong></em></p> <p><strong>实现方式</strong>：Redis list的实现为一个双向链表，即可以支持反向查找和遍历，更方便操作，不过带来了部分额外的内存开销，Redis内部的很多实现，包括发送缓冲队列等也都是用的这个数据结构。</p> <div class="language-redis extra-class"><pre class="language-text"><code>将一个或多个值插入到列表头部
+LPUSH key value1 [value2] 
+
+获取列表指定范围内的元素
+LRANGE key start stop 
+
+移除列表的最后一个元素，返回值为移除的元素。
+RPOP key 
+</code></pre></div><h2 id="_4-set"><a href="#_4-set" class="header-anchor">#</a> 4.Set</h2> <p><em><strong>set 是string类型的无序集合。集合是通过hashtable实现的，概念和数学中个的集合基本类似，可以交集，并集，差集等等，set中的元素是没有顺序的。所以添加，删除，查找的复杂度都是O(1)</strong></em></p> <p><strong>常用命令</strong>：<em><strong>sadd,spop,smembers,sunion</strong></em></p> <p><strong>实现方式</strong>： <em>set 的内部实现是一个 value永远为null的HashMap，实际就是通过计算hash的方式来快速排重的，这也是set能提供判断一个成员是否在集合内的原因</em></p> <p>使用场景： ①交集，并集，差集：(Set)</p> <div class="language-redis extra-class"><pre class="language-text"><code>sadd key member
+</code></pre></div><h2 id="_5-zset"><a href="#_5-zset" class="header-anchor">#</a> 5.Zset</h2> <p>**zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。 <em>zadd 命令：<em>添加元素到集合，元素在集合中存在则更新对应score</em></em></p> <p><strong>常用命令</strong>：<em><strong>zadd,zrange,zrem,zcard等</strong></em></p> <p><strong>实现方式</strong>：Redis sorted set的内部使用HashMap和跳跃表(SkipList)来保证数据的存储和有序，HashMap里放的是成员到score的映射，而跳跃表里存放的是所有的成员，排序依据是HashMap里存的score,使用跳跃表的结构可以获得比较高的查找效率，并且在实现上比较简单。</p> <div class="language-redis extra-class"><pre class="language-text"><code>zadd key score member
+
+</code></pre></div><table><thead><tr><th>类型</th> <th>简介</th> <th>特性</th> <th>场景</th></tr></thead> <tbody><tr><td>String(字符串)</td> <td>二进制安全</td> <td>可以包含任何数据,比如jpg图片或者序列化的对象,一个键最大能存储512M</td> <td></td></tr> <tr><td>Hash(字典)</td> <td>键值对集合,即编程语言中的Map类型</td> <td>适合存储对象,并且可以像数据库中update一个属性一样只修改某一项属性值(Memcached中需要取出整个字符串反序列化成对象修改完再序列化存回去)</td> <td>存储、读取、修改用户属性</td></tr> <tr><td>List(列表)</td> <td>链表(双向链表)</td> <td>增删快,提供了操作某一段元素的API</td> <td>1、最新消息排行等功能(比如朋友圈的时间线) 2、消息队列</td></tr> <tr><td>Set(集合)</td> <td>哈希表实现,元素不重复</td> <td>1、添加、删除、查找的复杂度都是O(1) 2、为集合提供了求交集、并集、差集等操作</td> <td>1、共同好友 2、利用唯一性,统计访问网站的所有独立ip 3、好友推荐时,根据tag求交集,大于某个阈值就可以推荐</td></tr> <tr><td>Sorted Set(有序集合)</td> <td>将Set中的元素增加一个权重参数score,元素按score有序排列</td> <td>数据插入集合时,已经进行天然排序</td> <td>1、排行榜 2、带权重的消息队列</td></tr></tbody></table> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment">#1. 基于List的 LPUSH+BRPOP 的实现</span>
+使用rpush和lpush操作入队列，lpop和rpop操作出队列。
+
+List支持多个生产者和消费者并发进出消息，每个消费者拿到都是不同的列表元素。
+但是当队列为空时，lpop和rpop会一直空轮训，消耗资源；所以引入阻塞读blpop和brpop（b代表blocking），阻塞读在队列没有数据的时候进入休眠状态，一旦数据到来则立刻醒过来，消息延迟几乎为零。
+
+<span class="token comment">#2. SUB/PUB，订阅/发布模式</span>
+SUBSCRIBE，用于订阅信道
+
+PUBLISH，向信道发送消息
+
+UNSUBSCRIBE，取消订阅
+
+此模式允许生产者只生产一次消息，由中间件负责将消息复制到多个消息队列，每个消息队列由对应的消费组消费。
+
+可见，Pub<span class="token operator">/</span>Sub 模式不适合做消息存储，消息积压类的业务，而是擅长处理广播，即时通讯，即时反馈的业务。
+
+<span class="token comment">#3. 基于Sorted-Set的实现</span>
+Sortes Set<span class="token punctuation">(</span>有序列表<span class="token punctuation">)</span>，类似于java的SortedSet和HashMap的结合体，一方面她是一个<span class="token builtin">set</span>，保证内部value的唯一性，另一方面它可以给每个value赋予一个score，代表这个value的排序权重。内部实现是“跳跃表”。
+
+有序集合的方案是在自己确定消息顺ID时比较常用，使用集合成员的Score来作为消息ID，保证顺序，还可以保证消息ID的单调递增。通常可以使用时间戳<span class="token operator">+</span>序号的方案。确保了消息ID的单调递增，利用SortedSet的依据Score排序的特征，就可以制作一个有序的消息队列了。
+
+<span class="token comment">#4. 基于Stream类型的实现</span>
+Stream为redis <span class="token number">5.0</span>后新增的数据结构。支持多播的可持久化消息队列，实现借鉴了Kafka设计。
+Redis Stream的结构如上图所示，它有一个消息链表，将所有加入的消息都串起来，每个消息都有一个唯一的ID和对应的内容。消息是持久化的，Redis重启后，内容还在。
+
+
+
+
+<span class="token triple-quoted-string string">'''
+生产者生产速度大于消费者消费速度，面临消息不断堆积的问题，随着消息数据的堆积，队列是开启限流措施，还是丢弃某些消息，更或者是把消息数据进行持久化。对于基于redis实现的消息队列，一般为可忍受部分消息丢失的业务，所以很多人选择丢弃消息的方案。
+另一种方案是基于redis单线程机制，可以增加消费者数量，这也是仅仅针对消息只被消费一次的场景。当然也可以选择持久化方案，但是会对redis的性能产生影响'''</span>
+
+</code></pre></div><p>##Celery 分布式异步架构</p> <img src="/Users/eric/Downloads/Doc/c8892f2b081d79d3e6efa402ee83aaaa.png" alt="Celery 分布式异步架构" style="zoom:100%;"></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">5/14/2023, 12:30:43 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/运维部署/nacos安装指南.html" class="prev">
+        nacos安装指南
+      </a></span> <span class="next"><a href="/运维部署/Ubuntu部署.html">
+        Ubuntu 部署nginx、生成泛域名证书
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.7c55f94f.js" defer></script><script src="/assets/js/2.559d5401.js" defer></script><script src="/assets/js/20.4ec18ec9.js" defer></script>
+  </body>
+</html>
