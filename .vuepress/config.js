@@ -9,11 +9,10 @@ module.exports = {
     ['link', { rel: 'icon', href: '/vim-go.png' }]
     ],
     themeConfig: {
-        sidebar: 'auto',
         logo: '/vim-go.png',
         lastUpdated: 'Last Updated', // string | boolean
         repo: 'https://github.com/eric-jxl/Apidoc.git',
-        docsDir: 'Apidoc',
+        docsDir: 'Apidoc/.vuepress/dist',
         docsBranch: 'main',
         //导航栏
         nav: [
