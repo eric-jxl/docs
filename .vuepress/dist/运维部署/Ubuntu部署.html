@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ubuntu 部署nginx、生成泛域名证书 | Eric&#39;s Docs</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/vim-go.png">
+    <meta name="description" content="Vue 驱动的静态网站生成器">
+    
+    <link rel="preload" href="/assets/css/0.styles.e8e4f3a3.css" as="style"><link rel="preload" href="/assets/js/app.99905668.js" as="script"><link rel="preload" href="/assets/js/2.733019b2.js" as="script"><link rel="preload" href="/assets/js/21.cce498a6.js" as="script"><link rel="prefetch" href="/assets/js/10.de9f16e9.js"><link rel="prefetch" href="/assets/js/11.f0909d52.js"><link rel="prefetch" href="/assets/js/12.cc8d89d2.js"><link rel="prefetch" href="/assets/js/13.d113eb9a.js"><link rel="prefetch" href="/assets/js/14.b8fb7468.js"><link rel="prefetch" href="/assets/js/15.a9d571cd.js"><link rel="prefetch" href="/assets/js/16.e163fb95.js"><link rel="prefetch" href="/assets/js/17.9d6617e1.js"><link rel="prefetch" href="/assets/js/18.fee65933.js"><link rel="prefetch" href="/assets/js/19.535867e0.js"><link rel="prefetch" href="/assets/js/20.044fedd3.js"><link rel="prefetch" href="/assets/js/22.d36adf7c.js"><link rel="prefetch" href="/assets/js/23.e69c80c0.js"><link rel="prefetch" href="/assets/js/24.786c0aa2.js"><link rel="prefetch" href="/assets/js/3.e9d031a5.js"><link rel="prefetch" href="/assets/js/4.d12742be.js"><link rel="prefetch" href="/assets/js/5.216cae74.js"><link rel="prefetch" href="/assets/js/6.2d0a63f8.js"><link rel="prefetch" href="/assets/js/7.79f9507b.js"><link rel="prefetch" href="/assets/js/8.f48b7ce8.js"><link rel="prefetch" href="/assets/js/9.c83989d6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e8e4f3a3.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/vim-go.png" alt="Eric's Docs" class="logo"> <span class="site-name can-hide">Eric's Docs</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Guide" class="dropdown-title"><span class="title">Guide</span> <span class="arrow down"></span></button> <button type="button" aria-label="Guide" class="mobile-dropdown-title"><span class="title">Guide</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          超高清能力
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/超高清能力/交接文档.html" class="nav-link">
+  交接文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/搬迁组件说明文档.html" class="nav-link">
+  搬迁文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/Dvadmin 接口.html" class="nav-link">
+  Dvadmin接口
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/RD报告接口文档.html" class="nav-link">
+  RD报告接口文档
+</a></li></ul></li><li class="dropdown-item"><h4>
+          运维部署
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/运维部署/Docker.html" class="nav-link">
+  Docker
+</a></li></ul></li><li class="dropdown-item"><h4>
+          面经
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/面试/面经.html" class="nav-link">
+  面经
+</a></li></ul></li><li class="dropdown-item"><h4>
+          odoo
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/odoo/odoo核心业务.html" class="nav-link">
+  odoo核心业务
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://github.com/eric-jxl/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Guide" class="dropdown-title"><span class="title">Guide</span> <span class="arrow down"></span></button> <button type="button" aria-label="Guide" class="mobile-dropdown-title"><span class="title">Guide</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          超高清能力
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/超高清能力/交接文档.html" class="nav-link">
+  交接文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/搬迁组件说明文档.html" class="nav-link">
+  搬迁文档
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/Dvadmin 接口.html" class="nav-link">
+  Dvadmin接口
+</a></li><li class="dropdown-subitem"><a href="/超高清能力/RD报告接口文档.html" class="nav-link">
+  RD报告接口文档
+</a></li></ul></li><li class="dropdown-item"><h4>
+          运维部署
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/运维部署/Docker.html" class="nav-link">
+  Docker
+</a></li></ul></li><li class="dropdown-item"><h4>
+          面经
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/面试/面经.html" class="nav-link">
+  面经
+</a></li></ul></li><li class="dropdown-item"><h4>
+          odoo
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/odoo/odoo核心业务.html" class="nav-link">
+  odoo核心业务
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://github.com/eric-jxl/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>超高清能力</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/超高清能力/搬迁组件说明文档.html" class="sidebar-link">搬迁组件说明文档</a></li><li><a href="/超高清能力/交接文档.html" class="sidebar-link">交接文档</a></li><li><a href="/超高清能力/DTing VQMT VQA部署常见问题.html" class="sidebar-link">DTing VQMT VQA部署常见问题</a></li><li><a href="/超高清能力/Dvadmin 接口.html" class="sidebar-link">标签</a></li><li><a href="/超高清能力/RD报告接口文档.html" class="sidebar-link">RD 报告 API 文档</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>运维部署</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/运维部署/Docker.html" class="sidebar-link">Docker</a></li><li><a href="/运维部署/Golang Ubuntu安装及配置.html" class="sidebar-link">Golang Ubuntu安装及配置</a></li><li><a href="/运维部署/Jupyter 远程配置.html" class="sidebar-link">Jupyter 远程配置</a></li><li><a href="/运维部署/nacos安装指南.html" class="sidebar-link">nacos安装指南</a></li><li><a href="/运维部署/RedisDoc.html" class="sidebar-link">Redis 安装与配置</a></li><li><a href="/运维部署/Ubuntu部署.html" class="active sidebar-link">Ubuntu 部署nginx、生成泛域名证书</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/运维部署/Ubuntu部署.html#nginx脚本" class="sidebar-link">nginx脚本</a></li><li class="sidebar-sub-header"><a href="/运维部署/Ubuntu部署.html#certbot" class="sidebar-link">certbot</a></li><li class="sidebar-sub-header"><a href="/运维部署/Ubuntu部署.html#netdata" class="sidebar-link">Netdata</a></li></ul></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>odoo</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/odoo/巡检任务接口.html" class="sidebar-link">巡检任务查询接口</a></li><li><a href="/odoo/odoo核心业务.html" class="sidebar-link">核心业务</a></li><li><a href="/odoo/Odoo及Postgresql.html" class="sidebar-link">Odoo及Postgresql</a></li><li><a href="/odoo/odooconf.html" class="sidebar-link">Odoo Sever Config</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="ubuntu-部署nginx、生成泛域名证书"><a href="#ubuntu-部署nginx、生成泛域名证书" class="header-anchor">#</a> Ubuntu 部署nginx、生成泛域名证书</h1> <h2 id="nginx脚本"><a href="#nginx脚本" class="header-anchor">#</a> nginx脚本</h2> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">import</span> os
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">&quot;sudo -i&quot;</span><span class="token punctuation">)</span>
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">&quot;apt-get update &amp;&amp; apt-get upgrade&quot;</span><span class="token punctuation">)</span>
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">&quot;apt-get install nginx&quot;</span><span class="token punctuation">)</span>
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">&quot;apt-get install -y build-essential libtool  build-essential gcc libpcre3 libpcre3-dev zlib1g-dev openssl&quot;</span><span class="token punctuation">)</span>
+
+<span class="token comment">#nginx index位置</span>
+<span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>nginx<span class="token operator">/</span>html
+<span class="token comment">#nginx bin路径</span>
+<span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>nginx
+
+<span class="token comment">#修复pip3</span>
+python3 <span class="token operator">-</span>m ensurepip
+</code></pre></div><h2 id="certbot"><a href="#certbot" class="header-anchor">#</a> certbot</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#Let's Encrypt 配置泛域名通用证书</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> certbot
+pip3 <span class="token function">install</span> certbot-nginx
+certbot certonly <span class="token parameter variable">--manual</span>  <span class="token parameter variable">-d</span> <span class="token string">&quot;*.example.com&quot;</span> --preferred-challenges dns-01 <span class="token parameter variable">--server</span> https://acme-v02.api.letsencrypt.org/directory
+</code></pre></div><h2 id="netdata"><a href="#netdata" class="header-anchor">#</a> Netdata</h2> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#Netdata监控平台</span>
+<span class="token function">bash</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token function">curl</span> <span class="token parameter variable">-Ss</span> https://my-netdata.io/kickstart.sh<span class="token punctuation">)</span>
+<span class="token function">killall</span> netdata
+<span class="token function">cp</span> system/netdata.service  /etc/systemd/system/
+systemctl daemon-reload
+systemctl <span class="token builtin class-name">enable</span> netdata
+systemctl start netdata
+http://localhost:19999 <span class="token comment">#访问地址</span>
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code>
+<span class="token comment">#File Browser</span>
+<span class="token comment">#Linux</span>
+<span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://raw.githubusercontent.com/filebrowser/get/master/get.sh <span class="token operator">|</span> <span class="token function">bash</span>
+
+<span class="token comment">#Mac</span>
+brew tap filebrowser/tap
+brew <span class="token function">install</span> filebrowser
+
+<span class="token comment">#windows</span>
+iwr <span class="token parameter variable">-useb</span> https://raw.githubusercontent.com/filebrowser/get/master/get.ps1 <span class="token operator">|</span> iex
+
+filebrowser <span class="token parameter variable">-r</span> /path/to/your/files
+
+filebrowser config <span class="token builtin class-name">set</span> <span class="token parameter variable">--branding.name</span> <span class="token string">&quot;Eric&quot;</span> <span class="token punctuation">\</span>
+    <span class="token parameter variable">--branding.files</span> <span class="token string">&quot;/home/jxleric95/jupyter&quot;</span> <span class="token punctuation">\</span>
+    <span class="token parameter variable">--branding.disableExternal</span>
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#nginx.service</span>
+<span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
+<span class="token assign-left variable">Description</span><span class="token operator">=</span>A high performance web server and a reverse proxy server
+<span class="token assign-left variable">Documentation</span><span class="token operator">=</span>man:nginx<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span>
+<span class="token assign-left variable">After</span><span class="token operator">=</span>network.target
+
+<span class="token punctuation">[</span>Service<span class="token punctuation">]</span>
+<span class="token assign-left variable">Type</span><span class="token operator">=</span>forking
+<span class="token assign-left variable">PIDFile</span><span class="token operator">=</span>/run/nginx.pid
+<span class="token assign-left variable">ExecStartPre</span><span class="token operator">=</span>/usr/sbin/nginx <span class="token parameter variable">-t</span> <span class="token parameter variable">-q</span> <span class="token parameter variable">-g</span> <span class="token string">'daemon on; master_process on;'</span>
+<span class="token assign-left variable">ExecStart</span><span class="token operator">=</span>/usr/sbin/nginx <span class="token parameter variable">-g</span> <span class="token string">'daemon on; master_process on;'</span>
+<span class="token assign-left variable">ExecReload</span><span class="token operator">=</span>/usr/sbin/nginx <span class="token parameter variable">-g</span> <span class="token string">'daemon on; master_process on;'</span> <span class="token parameter variable">-s</span> reload
+<span class="token assign-left variable">ExecStop</span><span class="token operator">=</span>-/sbin/start-stop-daemon <span class="token parameter variable">--quiet</span> <span class="token parameter variable">--stop</span> <span class="token parameter variable">--retry</span> QUIT/5 <span class="token parameter variable">--pidfile</span> /run/nginx.pid
+<span class="token assign-left variable">TimeoutStopSec</span><span class="token operator">=</span><span class="token number">5</span>
+<span class="token assign-left variable">KillMode</span><span class="token operator">=</span>mixed
+
+<span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
+<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target
+</code></pre></div><div class="language-mysql extra-class"><pre class="language-text"><code>#安装Mysql
+sudo apt-get install -y mysql-server mysql-client
+sudo netstat -tap | grep mysql
+mysql -u root -p
+#修改mysql密码
+ cd /etc/mysql                      // 进入mysql子目录
+ sudo vim debian.cnf
+#开启远程访问
+grant all privileges on *.* to 'root'@'%' identified by '密码'; 
+ 
+#安装Postgresql
+sudo apt install -y postgresql postgresql-contrib
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token shebang important">#! /usr/bin/env sh</span>
+
+<span class="token comment">#启动odoo及关闭odoo脚本</span>
+<span class="token keyword">case</span> <span class="token variable">$1</span> <span class="token keyword">in</span>
+        start<span class="token punctuation">)</span>nohup /usr/bin/python /home/jxleric95/odoo10/server/odoo-bin <span class="token parameter variable">-c</span> /home/jxleric95/odoo10/server/petty_cash.conf <span class="token operator">&gt;</span>out.log <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+       stop<span class="token punctuation">)</span> <span class="token function">kill</span> <span class="token parameter variable">-9</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">ps</span> <span class="token parameter variable">-x</span> <span class="token operator">|</span><span class="token function">grep</span> odoo<span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'{print $1}'</span><span class="token variable">)</span></span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+       *<span class="token punctuation">)</span> <span class="token builtin class-name">echo</span> <span class="token string">&quot;require start|stop&quot;</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">esac</span>
+  
+</code></pre></div><div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#安装zsh</span>
+<span class="token function">apt</span> update
+<span class="token function">apt</span> <span class="token function">install</span> <span class="token function">zsh</span> <span class="token parameter variable">-y</span>
+chsh <span class="token parameter variable">-s</span> /bin/zsh
+<span class="token comment">#Oh My Zsh 比较常用的两个插件是 zsh-autosuggestions 与 zsh-syntax-highlighting</span>
+<span class="token function">git</span> clone https://github.com/zsh-users/zsh-autosuggestions <span class="token variable">${ZSH_CUSTOM<span class="token operator">:-</span>~<span class="token operator">/</span>.oh-my-zsh<span class="token operator">/</span>custom}</span>/plugins/zsh-autosuggestions
+<span class="token function">git</span> clone https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="token variable">${ZSH_CUSTOM<span class="token operator">:-</span>~<span class="token operator">/</span>.oh-my-zsh<span class="token operator">/</span>custom}</span>/plugins/zsh-syntax-highlighting
+
+<span class="token comment">#Gitee</span>
+<span class="token function">git</span> clone https://gitee.com/phpxxo/zsh-autosuggestions.git <span class="token variable">${ZSH_CUSTOM<span class="token operator">:-</span>~<span class="token operator">/</span>.oh-my-zsh<span class="token operator">/</span>custom}</span>/plugins/zsh-autosuggestions
+
+<span class="token comment">#解决chsh: PAM: Authentication failure，直接修改用户配置，把bash改成zsh</span>
+<span class="token function">sudo</span> <span class="token function">vim</span> /etc/passwd
+
+root:x:0:0:root:/root:/usr/bin/bash
+<span class="token function">apt</span> <span class="token function">install</span> <span class="token function">git</span> <span class="token parameter variable">-y</span>
+<span class="token comment">#sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span>
+
+<span class="token comment">#卸载oh-my-zsh</span>
+ uninstall_oh_my_zsh <span class="token function">zsh</span>
+    或者
+ <span class="token comment">#sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/uninstall.sh)&quot;</span>
+</code></pre></div><div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">git</span> <span class="token function">wget</span>
+
+--ssh密码登陆
+<span class="token function">vi</span>  /etc/ssh/sshd_config
+PermitRootLogin <span class="token function">yes</span> <span class="token comment">#允许root登录</span>
+PermitEmptyPasswords no <span class="token comment">#不允许空密码登录</span>
+PasswordAuthentication <span class="token function">yes</span> <span class="token comment"># 设置是否使用口令验证。</span>
+--ssh使用密钥登录
+<span class="token function">cat</span> id_rsa.pub <span class="token operator">&gt;&gt;</span> authorized_keys
+<span class="token function">chmod</span> <span class="token number">600</span> authorized_keys
+RSAAuthentication <span class="token function">yes</span>
+PubkeyAuthentication <span class="token function">yes</span>
+PasswordAuthentication no <span class="token comment">#禁用密码</span>
+<span class="token function">service</span> sshd restart
+
+<span class="token parameter variable">--certbot</span> SSL证书 三个月更新
+<span class="token function">sudo</span> snap <span class="token function">install</span> core<span class="token punctuation">;</span> <span class="token function">sudo</span> snap refresh core
+<span class="token function">sudo</span> snap <span class="token function">install</span> <span class="token parameter variable">--classic</span> certbot
+<span class="token function">sudo</span> <span class="token function">ln</span> <span class="token parameter variable">-s</span> /snap/bin/certbot /usr/bin/certbot
+<span class="token function">sudo</span> certbot <span class="token parameter variable">--nginx</span>  OR  <span class="token function">sudo</span> certbot certonly <span class="token parameter variable">--nginx</span>
+<span class="token function">sudo</span> certbot renew --dry-run 测试更新证书
+</code></pre></div><div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token comment">#user  nobody;</span>
+<span class="token directive"><span class="token keyword">worker_processes</span>  <span class="token number">1</span></span><span class="token punctuation">;</span>
+<span class="token directive"><span class="token keyword">error_log</span>  logs/error.log</span><span class="token punctuation">;</span>
+<span class="token comment">#error_log  logs/error.log  notice;</span>
+<span class="token comment">#error_log  logs/error.log  info;</span>
+<span class="token comment">#pid        logs/nginx.pid;</span>
+
+<span class="token directive"><span class="token keyword">events</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">worker_connections</span>  <span class="token number">1024</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">include</span>       mime.types</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">default_type</span>  application/octet-stream</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">sendfile</span>        <span class="token boolean">on</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">keepalive_timeout</span>  <span class="token number">65</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">gzip</span>  <span class="token boolean">on</span></span><span class="token punctuation">;</span>
+
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">listen</span>       <span class="token number">80</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span>  www.jxlss.cn</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+            <span class="token directive"><span class="token keyword">root</span>   html</span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">index</span>  index.html index.htm</span><span class="token punctuation">;</span>
+      			<span class="token directive"><span class="token keyword">rewrite</span> ^(.*)$  https://<span class="token variable">$host</span><span class="token variable">$1</span> permanent</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+    <span class="token punctuation">}</span>
+    <span class="token comment">#HTTPS server</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">listen</span>       <span class="token number">443</span>  ssl</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span>  www.jxlss.cn</span><span class="token punctuation">;</span>
+        
+
+        <span class="token directive"><span class="token keyword">ssl_certificate</span>      www.jxlss.cn.pem</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">ssl_certificate_key</span>  www.jxlss.cn.key</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">ssl_ciphers</span>  HIGH:!aNULL:!MD5</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">ssl_prefer_server_ciphers</span>  <span class="token boolean">on</span></span><span class="token punctuation">;</span>
+    
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+            <span class="token directive"><span class="token keyword">root</span>   html</span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">index</span>  index.html index.htm</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre></div><div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token directive"><span class="token keyword">upstream</span> odoo</span><span class="token punctuation">{</span>
+  <span class="token directive"><span class="token keyword">server</span></span>  <span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token directive"><span class="token keyword">supsteam</span> odoochat</span><span class="token punctuation">{</span>
+  <span class="token directive"><span class="token keyword">server</span></span>  <span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+   <span class="token directive"><span class="token keyword">listen</span>       <span class="token number">80</span></span><span class="token punctuation">;</span> 
+   <span class="token directive"><span class="token keyword">server_name</span>  odoo.jxlss.cn</span><span class="token punctuation">;</span>
+   <span class="token directive"><span class="token keyword">location</span> /</span><span class="token punctuation">{</span>
+      <span class="token directive"><span class="token keyword">rewrite</span> ^(.*)$  https://<span class="token variable">$host</span><span class="token variable">$1</span> permanent</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>   
+<span class="token punctuation">}</span>
+
+
+
+<span class="token comment">#HTTPS server</span>
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> odoo.jxlss.cn</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">ssl_certificate</span> /etc/letsencrypt/live/odoo.jxlss.cn/fullchain.pem</span><span class="token punctuation">;</span> <span class="token comment"># managed by Certbot</span>
+    <span class="token directive"><span class="token keyword">ssl_certificate_key</span> /etc/letsencrypt/live/odoo.jxlss.cn/privkey.pem</span><span class="token punctuation">;</span> <span class="token comment"># managed by </span>
+    <span class="token directive"><span class="token keyword">ssl_session_timeout</span> <span class="token number">5m</span></span><span class="token punctuation">;</span> 
+    <span class="token directive"><span class="token keyword">ssl_ciphers</span> ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">ssl_protocols</span> TLSv1 TLSv1.1 TLSv1.2</span><span class="token punctuation">;</span> <span class="token comment">#表示使用的TLS协议的类型。</span>
+    <span class="token directive"><span class="token keyword">ssl_prefer_server_ciphers</span> <span class="token boolean">on</span></span><span class="token punctuation">;</span> 
+    <span class="token directive"><span class="token keyword">location</span> /longpolling</span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">proxy_pass</span> http://odoochat</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>   
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span> 
+        <span class="token directive"><span class="token keyword">proxy_pass</span> http://odoo</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>   
+    <span class="token directive"><span class="token keyword">location</span> ~* /web/static/</span> <span class="token punctuation">{</span>
+       <span class="token directive"><span class="token keyword">proxy_cache_valid</span> <span class="token number">200</span> <span class="token number">90m</span></span><span class="token punctuation">;</span>
+       <span class="token directive"><span class="token keyword">proxy_buffering</span>    <span class="token boolean">on</span></span><span class="token punctuation">;</span> 
+       <span class="token directive"><span class="token keyword">expires</span> <span class="token number">864000</span></span><span class="token punctuation">;</span>
+       <span class="token directive"><span class="token keyword">proxy_pass</span> http://odoo</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>   
+    
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/运维部署/RedisDoc.html" class="prev">
+        Redis 安装与配置
+      </a></span> <span class="next"><a href="/odoo/巡检任务接口.html">
+        巡检任务查询接口
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.99905668.js" defer></script><script src="/assets/js/2.733019b2.js" defer></script><script src="/assets/js/21.cce498a6.js" defer></script>
+  </body>
+</html>
