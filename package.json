@@ -1,8 +1,8 @@
 {
     "scripts": {
-        "doc:dev": "vuepress dev docs",
-        "doc:build": "vuepress build docs",
-        "doc:deploy": "gh-pages -d docs/.vuepress/dist"
+        "dev": "vuepress dev docs",
+        "build": "vuepress build docs",
+        "deploy": "gh-pages -d docs/.vuepress/dist"
     },
     "devDependencies": {
         "vuepress": "^1.9.9"

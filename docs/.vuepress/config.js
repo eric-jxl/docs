@@ -2,17 +2,16 @@ module.exports = {
     title: 'Eric\'s Docs',
     description: 'Vue 驱动的静态网站生成器',
     port:9000,
-    base: 'Apidoc',
     dest: './dist',
     smoothScroll: true,
     head: [
-    ['link', { rel: 'icon', href: '/vim-go.png' }]
+        ['link', { rel: 'icon', href: '/vim-go.png' }]
     ],
     themeConfig: {
         logo: '/vim-go.png',
         lastUpdated: 'Last Updated', // string | boolean
-        repo: 'https://github.com/eric-jxl/Apidoc.git',
-        docsDir: 'Apidoc/.vuepress/dist',
+        repo: 'https://github.com/eric-jxl/docs.git',
+        docsDir: 'docs/.vuepress/dist',
         docsBranch: 'main',
         //导航栏
         nav: [
